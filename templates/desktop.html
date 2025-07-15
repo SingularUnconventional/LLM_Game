@@ -13,24 +13,26 @@
     </style>
 </head>
 <body>
-    <div id="outer-background"> <div id="desktop"> <div id="icon-area">
+    <div id="outer-background">
+        <div id="desktop">
+            <div id="icon-area">
                 <div class="icon" id="icon-my-computer" style="top: 10px; left: 10px;">
                     <img src="{{ url_for('static', filename='images/icon_computer.png') }}" alt="내 컴퓨터">
                     <span>내 컴퓨터</span>
                 </div>
-                <div class="icon" id="icon-notepad" style="top: 90px; left: 10px;">
-                    <img src="{{ url_for('static', filename='images/icon_notepad.png') }}" alt="메모장">
-                    <span>메모장</span>
-                </div>
-                <div class="icon" id="icon-my-documents" style="top: 170px; left: 10px;">
-                    <img src="{{ url_for('static', filename='images/icon_documents.png') }}" alt="내 문서">
-                    <span>내 문서</span>
-                </div>
-                <div class="icon" id="icon-recycle-bin" style="top: 250px; left: 10px;">
+                <div class="icon" id="icon-recycle-bin" style="top: 90px; left: 10px;">
                     <img src="{{ url_for('static', filename='images/icon_recycle_bin.png') }}" alt="휴지통">
                     <span>휴지통</span>
                 </div>
+                <div class="icon" id="icon-messages" style="top: 170px; left: 10px;">
+                    <img src="{{ url_for('static', filename='images/icon_documents.png') }}" alt="메시지">
+                    <span>메시지</span>
                 </div>
+                <div class="icon" id="icon-game" style="top: 250px; left: 10px;">
+                    <img src="{{ url_for('static', filename='images/icon_notepad.png') }}" alt="미니 게임">
+                    <span>미니 게임</span>
+                </div>
+            </div>
 
             <div id="window-container"></div>
 
@@ -40,14 +42,14 @@
                     Start
                 </button>
                 <div id="taskbar-apps">
-                    </div>
+                </div>
                 <div id="taskbar-system-tray">
                     <img src="{{ url_for('static', filename='images/clock_icon.png') }}" alt="Clock">
                     <span id="current-time">--:--</span>
                 </div>
             </div>
         </div>
-        
+
         <div id="monitor-overlay"></div>
     </div>
 
