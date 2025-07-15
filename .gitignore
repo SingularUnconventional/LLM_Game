@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Environment variables & Sensitive Configuration
+.env
+.flaskenv
+config.py # 경고: 이 파일에 API 키가 직접 포함되어 있고, 환경 변수를 통해 로드하지 않는 경우에만 추가합니다.
+          # 일반적으로 config.py는 버전 관리되지만, 민감한 정보는 .env에서 로드해야 합니다.
+secrets.py # 민감한 정보를 담을 수 있는 별도의 secrets 파일 (사용할 경우)
+.secret # 간단한 비밀 키 등을 담는 파일
+
+# Database
+*.sqlite3
+*.db
+site.db
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Build artifacts & Packaging
+dist/
+build/
+*.egg-info/
+htmlcov/
+.coverage
+
+# Frontend (Node.js/NPM/Yarn related) - 향후 프론트엔드 빌드 시스템 추가 시
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor swap files
+*~
+*.swp
+*.swo
+
+# Other temporary files
+*.tmp
+*.bak
+
+# User uploaded content (만약 사용자가 업로드한 파일을 로컬에 저장한다면)
+# uploads/
+# media/
+
+# API Keys and Certificates (직접 저장하는 경우)
+*.key
+*.pem
+*.json # API 키나 자격 증명을 JSON 형식으로 저장하는 경우 (예: Google Cloud 서비스 계정 키)

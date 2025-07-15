@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM OS - Desktop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        @font-face {
+            font-family: 'Marlett';
+            src: url('{{ url_for("static", filename="fonts/marlett.ttf") }}') format('truetype');
+        }
+    </style>
+</head>
+<body>
+    <div id="outer-background"> <div id="desktop"> <div id="icon-area">
+                <div class="icon" id="icon-my-computer" style="top: 10px; left: 10px;">
+                    <img src="{{ url_for('static', filename='images/icon_computer.png') }}" alt="내 컴퓨터">
+                    <span>내 컴퓨터</span>
+                </div>
+                <div class="icon" id="icon-notepad" style="top: 90px; left: 10px;">
+                    <img src="{{ url_for('static', filename='images/icon_notepad.png') }}" alt="메모장">
+                    <span>메모장</span>
+                </div>
+                <div class="icon" id="icon-my-documents" style="top: 170px; left: 10px;">
+                    <img src="{{ url_for('static', filename='images/icon_documents.png') }}" alt="내 문서">
+                    <span>내 문서</span>
+                </div>
+                <div class="icon" id="icon-recycle-bin" style="top: 250px; left: 10px;">
+                    <img src="{{ url_for('static', filename='images/icon_recycle_bin.png') }}" alt="휴지통">
+                    <span>휴지통</span>
+                </div>
+                </div>
+
+            <div id="window-container"></div>
+
+            <div id="taskbar" class="button-3d-outset">
+                <button id="start-button">
+                    <img src="{{ url_for('static', filename='images/start_button.png') }}" alt="Start">
+                    Start
+                </button>
+                <div id="taskbar-apps">
+                    </div>
+                <div id="taskbar-system-tray">
+                    <img src="{{ url_for('static', filename='images/clock_icon.png') }}" alt="Clock">
+                    <span id="current-time">--:--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="monitor-overlay"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/windowManager.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/desktop.js') }}"></script>
+</body>
+</html>

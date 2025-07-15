@@ -1,0 +1,336 @@
+/* static/css/style.css - Full Code with new background.png as overlay */
+
+/* 기본 HTML 요소 스타일 초기화 및 폰트 설정 */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'MS Sans Serif', 'Arial', sans-serif; /* 윈도우 기본 폰트와 유사한 대체 */
+    color: #000; /* 기본 텍스트 색상 */
+    overflow: hidden; /* 스크롤바 제거 */
+    -webkit-font-smoothing: antialiased; /* 폰트 렌더링 부드럽게 (선택 사항) */
+    height: 100%; /* body, html 높이를 100%로 설정 */
+    width: 100%; /* body, html 너비를 100%로 설정 */
+}
+
+/* 모니터 바깥의 공간을 위한 컨테이너 */
+#outer-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #333; /* 모니터 바깥 공간의 색상 (어두운 벽 같은 느낌) */
+    position: relative; /* #desktop 및 #monitor-overlay의 absolute 포지셔닝 기준 */
+}
+
+ /* 데스크톱 (실제 화면 영역) */
+#desktop {
+  position: absolute; /* #outer-background를 기준으로 절대 위치 */
+  /* 아래 값들은 이전 이미지에서 계산된 값입니다. 새 이미지에 따라 미세 조정이 필요할 수 있습니다. */
+  /* 이 영역은 이제 monitor-overlay에 의해 가장자리가 가려질 수 있습니다. */
+  left: 23%; /* (126 / 500) * 100 */
+  top: 10%;  /* (95 / 500) * 100 */
+  width: 56%; /* (248 / 500) * 100 */
+  height: 78%;/* (151 / 500) * 100 */
+
+  background-color: #008080; /* 윈도우 95 기본 배경색 */
+  background-image: url('../images/win95_bg.jpg'); /* 레트로 배경 이미지 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column; /* 아이콘과 작업표시줄 배치를 위해 */
+  overflow: hidden; /* 창이 이 영역 밖으로 나가지 않도록 */
+  /* desktop의 z-index는 overlay보다 낮아야 합니다 */
+  z-index: 100;
+}
+
+/* NEW: 모니터 프레임 오버레이 - 모든 데스크톱 내용 위에 겹쳐짐 */
+#monitor-overlay {
+  position: absolute;
+  top: -80%;
+  left: -100%;
+  width: 300%;
+  height: 320%;
+  background-image: url('../images/background.png'); /* 투명 모니터 프레임 이미지 */
+  background-size: contain; /* 이미지가 잘리지 않고 컨테이너에 맞게 스케일 */
+  background-repeat: no-repeat;
+  background-position: center; /* 이미지를 중앙에 배치 */
+  z-index: 2000; /* 데스크톱 내용 (창 등) 위에 오도록 높은 z-index 설정 */
+  pointer-events: none; /* 이 요소는 마우스 이벤트를 무시하고 아래 요소로 전달 */
+  /* 도트 이미지를 선명하게 렌더링 시도 (브라우저 지원에 따라 다름) */
+  image-rendering: -webkit-optimize-contrast; /* Webkit browsers */
+  image-rendering: crisp-edges; /* Modern browsers */
+  image-rendering: pixelated; /* Firefox */
+}
+
+
+/* 아이콘 영역 (작업 표시줄 제외한 공간) */
+#icon-area {
+    flex-grow: 1;
+    position: relative;
+}
+
+/* 아이콘 스타일 */
+.icon {
+    position: absolute; /* 바탕화면 자유 배치 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    cursor: pointer;
+    user-select: none; /* 텍스트 선택 방지 */
+    width: 70px; /* 아이콘 영역 너비 고정 */
+    height: 70px; /* 아이콘 영역 높이 고정 */
+    text-align: center;
+    box-sizing: border-box; /* 패딩 포함 너비 계산 */
+}
+.icon:hover {
+    background-color: rgba(0, 0, 128, 0.3); /* 파란색 하이라이트 */
+    border: 1px dashed rgba(255, 255, 255, 0.5); /* 흰색 점선 테두리 */
+}
+.icon img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 2px; /* 아이콘과 텍스트 간격 조정 */
+    image-rendering: pixelated; /* 픽셀 깨짐 방지 */
+}
+.icon span {
+    color: #fff;
+    text-shadow: 1px 1px #000;
+    font-size: 0.75em; /* 아이콘 텍스트 크기 */
+    line-height: 1.2;
+    word-wrap: break-word; /* 텍스트 자동 줄바꿈 */
+}
+
+/* 창 기본 스타일 */
+.window {
+    position: absolute;
+    background-color: #c0c0c0; /* 회색 */
+    border: 2px outset #fff; /* 3D 효과 */
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.5); /* 그림자 */
+    min-width: 200px;
+    min-height: 150px;
+    resize: both; /* 리사이즈 가능 */
+    overflow: hidden; /* 내용이 창을 넘치지 않도록 */
+    display: flex;
+    flex-direction: column;
+    z-index: 1000; /* 창의 z-index는 overlay (2000)보다 낮아야 합니다 */
+    border-radius: 0; /* 둥근 모서리 제거 */
+}
+
+.window.active {
+    z-index: 1001; /* 활성화된 창은 맨 위로 (overlay보다는 낮음) */
+}
+
+.title-bar {
+    background: linear-gradient(to right, #000080, #1084d0); /* 파란색 그라데이션 */
+    color: #fff;
+    padding: 3px 5px;
+    font-weight: bold;
+    cursor: grab; /* 드래그 가능 커서 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    user-select: none; /* 텍스트 선택 방지 */
+}
+.title-bar-text {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 2px; /* 제목 텍스트 패딩 */
+}
+.title-bar-controls {
+    display: flex;
+    gap: 1px; /* 버튼 간격 */
+}
+.title-bar-controls button {
+    background-color: #c0c0c0;
+    border: 2px outset #fff; /* 3D 버튼 효과 */
+    width: 18px;
+    height: 18px;
+    font-size: 0.8em;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Marlett', 'Wingdings', sans-serif; /* 윈도우 아이콘 폰트 */
+}
+/* 각 버튼 아이콘은 폰트 또는 배경 이미지로 처리 */
+.window-minimize::before { content: '0'; /* Marlett 폰트 아이콘 */ }
+.window-maximize::before { content: '1'; /* Marlett 폰트 아이콘 */ }
+.window-close::before { content: 'r'; /* Marlett 폰트 아이콘 */ }
+
+
+/* 작업 표시줄 스타일 */
+#taskbar {
+    height: 30px;
+    background-color: #c0c0c0; /* 작업 표시줄 배경색 */
+    border-top: 2px solid #fff; /* 상단 3D 효과 */
+    border-bottom: 2px solid #808080; /* 하단 3D 효과 */
+    display: flex;
+    align-items: center;
+    padding: 0 2px;
+    box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #808080;
+    flex-shrink: 0; /* 내용이 많아져도 줄어들지 않도록 */
+    width: 100%; /* 데스크톱 너비에 맞춰짐 */
+    position: absolute; /* #desktop 내에서 absolute 배치 */
+    bottom: 0; /* #desktop의 하단에 고정 */
+    left: 0;
+    z-index: 1002; /* 작업표시줄은 창보다 위에, 하지만 overlay보다는 아래 */
+}
+
+#start-button {
+    height: 24px;
+    padding: 0 6px;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+#taskbar-apps {
+    flex-grow: 1;
+    display: flex;
+    gap: 2px;
+    height: 100%; /* 버튼이 작업 표시줄 높이와 같도록 */
+}
+
+.taskbar-app-button {
+    background-color: #c0c0c0;
+    border: 2px outset #fff;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    height: 100%;
+}
+.taskbar-app-button img {
+    height: 16px;
+    width: 16px;
+    margin-right: 5px;
+    image-rendering: pixelated;
+}
+
+#taskbar-system-tray {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border: 2px inset #808080; /* 트레이 영역 3D 인셋 */
+    padding: 0 5px;
+    background-color: #c0c0c0;
+    box-shadow: inset 1px 1px #808080, inset -1px -1px #dfdfdf;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+#taskbar-system-tray img {
+    height: 16px;
+    width: 16px;
+    margin-right: 5px;
+}
+
+.window-content {
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #fff;
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    overflow: auto; /* 내용 스크롤 가능 */
+}
+
+/* 3D 아웃셋 스타일 (버튼, 박스 등) */
+.button-3d-outset,
+#login-box,
+#start-button,
+.taskbar-app-button,
+.title-bar-controls button {
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    background-color: #c0c0c0;
+    box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #808080;
+}
+
+/* 3D 인셋 스타일 (클릭 시, 활성화 시) */
+.button-3d-inset,
+#login-box button:active,
+#start-button:active,
+.taskbar-app-button:active,
+.taskbar-app-button.active,
+.title-bar-controls button:active {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    background-color: #c0c0c0;
+    box-shadow: inset 1px 1px #808080, inset -1px -1px #dfdfdf;
+}
+
+
+/* 로그인 페이지 스타일 */
+#login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000080; /* 부팅 화면처럼 파란색 배경 */
+    color: #fff;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+#login-box {
+    padding: 30px 50px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.5); /* 그림자 */
+    max-width: 400px;
+    width: 90%;
+}
+#login-box h1 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px #000;
+}
+#login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#login-box label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+#login-box input[type="text"],
+#login-box input[type="password"] {
+    width: calc(100% - 10px);
+    padding: 5px;
+    border: 1px solid #808080;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    background-color: #fff;
+    font-size: 1em;
+}
+#login-box button {
+    padding: 8px 15px;
+    margin-top: 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
